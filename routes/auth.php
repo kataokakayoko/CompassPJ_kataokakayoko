@@ -14,4 +14,5 @@ Route::middleware('guest')->group(function () {
                 ->name('loginView');
 
     Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('loginPost');
+
 });
