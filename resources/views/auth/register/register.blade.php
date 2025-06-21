@@ -1,55 +1,82 @@
 <x-guest-layout>
   <form action="{{ route('registerPost') }}" method="POST">
+  @csrf
     <div class="w-100 vh-100 d-flex" style="align-items:center; justify-content:center;">
       <div class="w-25 vh-75 border p-3">
+
+      @if ($errors->any())
+          <div class="alert alert-danger">
+            <ul class="mb-0" style="font-size:13px;">
+              @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+              @endforeach
+            </ul>
+          </div>
+        @endif
+
         <div class="register_form">
           <div class="d-flex mt-3" style="justify-content:space-between">
             <div class="" style="width:140px">
               <label class="d-block m-0" style="font-size:13px">姓</label>
               <div class="border-bottom border-primary" style="width:140px;">
-                <input type="text" style="width:140px;" class="border-0 over_name" name="over_name">
+              <input type="text" style="width:140px;" class="border-0 over_name" name="over_name" value="{{ old('over_name') }}">
               </div>
             </div>
             <div class="" style="width:140px">
               <label class=" d-block m-0" style="font-size:13px">名</label>
               <div class="border-bottom border-primary" style="width:140px;">
-                <input type="text" style="width:140px;" class="border-0 under_name" name="under_name">
+              <input type="text" style="width:140px;" class="border-0 under_name" name="under_name" value="{{ old('under_name') }}">
               </div>
+              @error('under_name')
+                <div class="text-danger" style="font-size:12px;">{{ $message }}</div>
+              @enderror
             </div>
           </div>
           <div class="d-flex mt-3" style="justify-content:space-between">
             <div class="" style="width:140px">
               <label class="d-block m-0" style="font-size:13px">セイ</label>
               <div class="border-bottom border-primary" style="width:140px;">
-                <input type="text" style="width:140px;" class="border-0 over_name_kana" name="over_name_kana">
+              <input type="text" style="width:140px;" class="border-0 over_name_kana" name="over_name_kana" value="{{ old('over_name_kana') }}">
               </div>
+              @error('over_name_kana')
+              <div class="text-danger" style="font-size:12px;">{{ $message }}</div>
+              @enderror
             </div>
             <div class="" style="width:140px">
               <label class="d-block m-0" style="font-size:13px">メイ</label>
               <div class="border-bottom border-primary" style="width:140px;">
-                <input type="text" style="width:140px;" class="border-0 under_name_kana" name="under_name_kana">
+              <input type="text" style="width:140px;" class="border-0 under_name_kana" name="under_name_kana" value="{{ old('under_name_kana') }}">
               </div>
+              @error('under_name_kana')
+              <div class="text-danger" style="font-size:12px;">{{ $message }}</div>
+              @enderror
             </div>
           </div>
           <div class="mt-3">
             <label class="m-0 d-block" style="font-size:13px">メールアドレス</label>
             <div class="border-bottom border-primary">
-              <input type="mail" class="w-100 border-0 mail_address" name="mail_address">
+            <input type="email" class="w-100 border-0 mail_address" name="mail_address" value="{{ old('mail_address') }}">
             </div>
-          </div>
+            @error('mail_address')
+            <div class="text-danger" style="font-size:12px;">{{ $message }}</div>
+            @enderror
+        </div>
         </div>
         <div class="mt-3">
-          <input type="radio" name="sex" class="sex" value="1">
+          <input type="radio" name="sex" class="sex" value="1" {{ old('sex') == 1 ? 'checked' : '' }}>
           <label style="font-size:13px">男性</label>
-          <input type="radio" name="sex" class="sex" value="2">
+          <input type="radio" name="sex" class="sex" value="2" {{ old('sex') == 2 ? 'checked' : '' }}>
           <label style="font-size:13px">女性</label>
-          <input type="radio" name="sex" class="sex" value="3">
+          <input type="radio" name="sex" class="sex" value="3" {{ old('sex') == 3 ? 'checked' : '' }}>
           <label style="font-size:13px">その他</label>
+          @error('sex')
+          <div class="text-danger" style="font-size:12px;">{{ $message }}</div>
+          @enderror
         </div>
         <div class="mt-3">
           <label class="d-block m-0 aa" style="font-size:13px">生年月日</label>
           <select class="old_year" name="old_year">
-            <option value="none">-----</option>
+            <option value="">-----</option>
             <option value="1985">1985</option>
             <option value="1986">1986</option>
             <option value="1987">1987</option>
@@ -79,7 +106,7 @@
           </select>
           <label style="font-size:13px">年</label>
           <select class="old_month" name="old_month">
-            <option value="none">-----</option>
+            <option value="">-----</option>
             <option value="01">1</option>
             <option value="02">2</option>
             <option value="03">3</option>
@@ -95,7 +122,7 @@
           </select>
           <label style="font-size:13px">月</label>
           <select class="old_day" name="old_day">
-            <option value="none">-----</option>
+            <option value="">-----</option>
             <option value="01">1</option>
             <option value="02">2</option>
             <option value="03">3</option>
@@ -128,24 +155,38 @@
             <option value="30">30</option>
             <option value="31">31</option>
           </select>
+
           <label style="font-size:13px">日</label>
+          @error('old_year')
+            <div class="text-danger" style="font-size:12px;">{{ $message }}</div>
+          @enderror
+          @error('old_month')
+            <div class="text-danger" style="font-size:12px;">{{ $message }}</div>
+          @enderror
+          @error('old_day')
+            <div class="text-danger" style="font-size:12px;">{{ $message }}</div>
+          @enderror
         </div>
+
         <div class="mt-3">
           <label class="d-block m-0" style="font-size:13px">役職</label>
-          <input type="radio" name="role" class="admin_role role" value="1">
+          <input type="radio" name="role" class="admin_role role" value="1" {{ old('role') == 1 ? 'checked' : '' }}>
           <label style="font-size:13px">教師(国語)</label>
-          <input type="radio" name="role" class="admin_role role" value="2">
+          <input type="radio" name="role" class="admin_role role" value="2" {{ old('role') == 2 ? 'checked' : '' }}>
           <label style="font-size:13px">教師(数学)</label>
-          <input type="radio" name="role" class="admin_role role" value="3">
+          <input type="radio" name="role" class="admin_role role" value="3" {{ old('role') == 3 ? 'checked' : '' }}>
           <label style="font-size:13px">教師(英語)</label>
-          <input type="radio" name="role" class="other_role role" value="4">
+          <input type="radio" name="role" class="other_role role" value="4" {{ old('role') == 4 ? 'checked' : '' }}>
           <label style="font-size:13px" class="other_role">生徒</label>
+          @error('role')
+          <div class="text-danger" style="font-size:12px;">{{ $message }}</div>
+          @enderror
         </div>
         <div class="select_teacher d-none">
           <label class="d-block m-0" style="font-size:13px">選択科目</label>
           @foreach($subjects as $subject)
           <div class="">
-            <input type="checkbox" name="subject[]" value="{{ $subject->id }}">
+          <input type="checkbox" name="subject[]" value="{{ $subject->id }}" {{ is_array(old('subject')) && in_array($subject->id, old('subject')) ? 'checked' : '' }}>
             <label>{{ $subject->subject }}</label>
           </div>
           @endforeach
@@ -155,6 +196,9 @@
           <div class="border-bottom border-primary">
             <input type="password" class="border-0 w-100 password" name="password">
           </div>
+          @error('password')
+          <div class="text-danger" style="font-size:12px;">{{ $message }}</div>
+          @enderror
         </div>
         <div class="mt-3">
           <label class="d-block m-0" style="font-size:13px">確認用パスワード</label>
@@ -169,10 +213,8 @@
           <a href="{{ route('loginView') }}">ログイン</a>
         </div>
       </div>
-      {{ csrf_field() }}
     </div>
   </form>
-  </div>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="{{ asset('js/register.js') }}" rel="stylesheet"></script>
 </x-guest-layout>

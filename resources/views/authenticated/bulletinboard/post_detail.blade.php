@@ -7,10 +7,26 @@
           <div>
           </div>
           <div>
+          @if(Auth::id() === $post->user_id)
             <span class="edit-modal-open" post_title="{{ $post->post_title }}" post_body="{{ $post->post }}" post_id="{{ $post->id }}">編集</span>
-            <a href="{{ route('post.delete', ['id' => $post->id]) }}">削除</a>
+            <button type="button" class="delete-modal-open btn btn-link text-danger" data-post-id="{{ $post->id }}">削除</button>
+          @endif
           </div>
         </div>
+      <div class="modal js-delete-modal">
+        <div class="modal__bg js-delete-modal-close"></div>
+          <div class="modal__content">
+            <p>この投稿を削除してもよろしいですか？</p>
+              <div class="text-center">
+              <form id="deleteForm" method="POST" action="">
+              @csrf
+              @method('DELETE')
+            <button type="submit" class="btn btn-danger">削除する</button>
+          <a class="btn btn-secondary js-delete-modal-close" href="#">キャンセル</a>
+          </form>
+          </div>
+        </div>
+      </div>
 
         <div class="contributor d-flex">
           <p>

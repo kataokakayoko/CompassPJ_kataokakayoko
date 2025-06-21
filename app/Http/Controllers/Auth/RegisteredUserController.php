@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Validation\Rule;
 use DB;
 
 use App\Models\Users\Subjects;
@@ -37,14 +38,48 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'over_name' => ['required', 'string', 'max:10'],
+            'under_name' => ['required', 'string', 'max:10'],
+            'over_name_kana' => ['required', 'string', 'max:30', 'regex:/^[ァ-ヶー]+$/u'],
+            'under_name_kana' => ['required', 'string', 'max:30', 'regex:/^[ァ-ヶー]+$/u'],
+            'mail_address' => ['required', 'email', 'max:100', 'unique:users,mail_address'],
+            'sex' => ['required', Rule::in([1, 2, 3])],
+            'old_year' => ['required', Rule::in(range(1985, 2010))],
+            'old_month' => ['required', Rule::in(range(1, 12))],
+            'old_day' => ['required', Rule::in(range(1, 31))],
+            'role' => ['required', Rule::in([1, 2, 3, 4])],
+            'password' => ['required', 'string', 'min:8', 'max:30', 'confirmed'],
+        ], [
+            'over_name.required' => '姓を入力してください。',
+            'under_name.required' => '名を入力してください。',
+            'over_name_kana.required' => 'セイを入力してください。',
+            'under_name_kana.required' => 'メイを入力してください。',
+            'over_name_kana.regex' => 'セイはカタカナで入力してください。',
+            'under_name_kana.regex' => 'メイはカタカナで入力してください。',
+            'mail_address.required' => 'メールアドレスを入力してください。',
+            'mail_address.email' => '※メール形式で入力してください。',
+            'mail_address.unique' => 'このメールアドレスは既に使われています。',
+            'sex.required' => '性別を選択してください。',
+            'old_year.required' => '生年月日（年）を選択してください。',
+            'old_month.required' => '生年月日（月）を選択してください。',
+            'old_day.required' => '生年月日（日）を選択してください。',
+            'old_year.in' => '有効な年を選択してください。',
+            'old_month.in' => '有効な月を選択してください。',
+            'old_day.in' => '有効な日を選択してください。',
+            'role.required' => '役職を選択してください。',
+            'password.required' => 'パスワードを入力してください。',
+            'password.min' => 'パスワードは8文字以上で入力してください。',
+            'password.confirmed' => 'パスワード（確認）が一致しません。',
+        ]);
+
+        if (!checkdate((int)$request->old_month, (int)$request->old_day, (int)$request->old_year)) {
+            return back()->withErrors(['old_day' => '正しい日付を入力してください'])->withInput();
+        }
+
         DB::beginTransaction();
         try{
-            $old_year = $request->old_year;
-            $old_month = $request->old_month;
-            $old_day = $request->old_day;
-            $data = $old_year . '-' . $old_month . '-' . $old_day;
-            $birth_day = date('Y-m-d', strtotime($data));
-            $subjects = $request->subject;
+            $birth_day = sprintf('%04d-%02d-%02d', $request->old_year, $request->old_month, $request->old_day);
 
             $user_get = User::create([
                 'over_name' => $request->over_name,
@@ -55,17 +90,16 @@ class RegisteredUserController extends Controller
                 'sex' => $request->sex,
                 'birth_day' => $birth_day,
                 'role' => $request->role,
-                'password' => bcrypt($request->password)
+                'password' => Hash::make($request->password)
             ]);
-            if($request->role == 4){
-                $user = User::findOrFail($user_get->id);
-                $user->subjects()->attach($subjects);
+            if($request->role == 4 && $request->has('subject')) {
+                $user_get->subjects()->attach($request->subject);
             }
             DB::commit();
             return view('auth.login.login');
         }catch(\Exception $e){
             DB::rollback();
-            return redirect()->route('loginView');
+            return redirect()->route('loginView')->with('error', '登録に失敗しました。');
         }
     }
 }
