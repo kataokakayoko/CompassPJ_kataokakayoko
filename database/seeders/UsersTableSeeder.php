@@ -20,11 +20,15 @@ class UsersTableSeeder extends Seeder
                 'name' => '片岡',
                 'email' => 'kataoka@gmail.com',
                 'password' => Hash::make('11111111'),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'name' => '佳代子',
                 'email' => 'kayoko@gmail.com',
                 'password' => Hash::make('11111111'),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }
