@@ -8,7 +8,7 @@
           </div>
           <div>
           @if(Auth::id() === $post->user_id)
-            <span class="edit-modal-open" post_title="{{ $post->post_title }}" post_body="{{ $post->post }}" post_id="{{ $post->id }}">編集</span>
+            <span class="edit-modal-open" data-post_title="{{ $post->post_title }}" data-post_body="{{ $post->post }}" data-post_id="{{ $post->id }}">編集</span>
             <button type="button" class="delete-modal-open btn btn-link text-danger" data-post-id="{{ $post->id }}">削除</button>
           @endif
           </div>

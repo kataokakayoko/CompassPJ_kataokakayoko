@@ -63,4 +63,15 @@ $(function () {
     return false;
   });
 
+  $(document).on('click', '.delete-modal-open', function () {
+    $('.js-delete-modal').fadeIn();
+    var postId = $(this).data('post-id');
+    $('#deleteForm').attr('action', '/bulletin_board/post/' + postId);
+  });
+
+  $(document).on('click', '.js-delete-modal-close', function () {
+    $('.js-delete-modal').fadeOut();
+    return false;
+  });
+
 });

@@ -5,7 +5,12 @@
       <p class="mb-0">カテゴリー</p>
       <select class="w-100" form="postCreate" name="post_category_id">
         @foreach($main_categories as $main_category)
-        <optgroup label="{{ $main_category->main_category }}">
+        <optgroup label="{{ $main_category->main_category }}" style="color: gray;">
+          @foreach($main_category->subCategories as $sub_category)
+          <option value="{{ $sub_category->id }}" style="color: black;">
+            {{ $sub_category->sub_category }}
+          </option>
+          @endforeach
         <!-- サブカテゴリー表示 -->
         </optgroup>
         @endforeach
@@ -30,16 +35,44 @@
     </div>
     <form action="{{ route('post.create') }}" method="post" id="postCreate">{{ csrf_field() }}</form>
   </div>
+
   @can('admin')
   <div class="w-25 ml-auto mr-auto">
     <div class="category_area mt-5 p-5">
+      <!-- メインカテゴリー追加 -->
       <div class="">
         <p class="m-0">メインカテゴリー</p>
         <input type="text" class="w-100" name="main_category_name" form="mainCategoryRequest">
         <input type="submit" value="追加" class="w-100 btn btn-primary p-0" form="mainCategoryRequest">
       </div>
-      <!-- サブカテゴリー追加 -->
       <form action="{{ route('main.category.create') }}" method="post" id="mainCategoryRequest">{{ csrf_field() }}</form>
+
+      <!-- サブカテゴリー追加 -->
+      <div class="mt-4">
+       <p class="m-0">サブカテゴリー</p>
+        <form action="{{ route('sub.category.create') }}" method="post" id="subCategoryRequest">
+        {{ csrf_field() }}
+
+        <select class="w-100 mb-2" name="main_category_id">
+      <option value="">---</option>
+      @foreach($main_categories as $main_category)
+      <option value="{{ $main_category->id }}" {{ old('main_category_id') == $main_category->id ? 'selected' : '' }}>
+        {{ $main_category->main_category }}
+      </option>
+      @endforeach
+      </select>
+      @error('main_category_id')
+      <div class="text-danger">{{ $message }}</div>
+      @enderror
+
+      <input type="text" class="w-100 mb-2" name="sub_category_name" placeholder="サブカテゴリー名" value="{{ old('sub_category_name') }}">
+      @error('sub_category_name')
+      <div class="text-danger">{{ $message }}</div>
+      @enderror
+
+      <button type="submit" class="w-100 btn btn-primary p-0">追加</button>
+      </form>
+      </div>
     </div>
   </div>
   @endcan

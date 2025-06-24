@@ -11,6 +11,7 @@ use App\Models\Posts\PostComment;
 use App\Models\Posts\Like;
 use App\Models\Users\User;
 use App\Http\Requests\BulletinBoard\PostFormRequest;
+use Illuminate\Validation\Rule;
 use Auth;
 
 class PostsController extends Controller
@@ -48,9 +49,16 @@ class PostsController extends Controller
         return view('authenticated.bulletinboard.post_create', compact('main_categories'));
     }
 
-    public function postCreate(PostFormRequest $request){
+    public function postCreate(Request $request){
+        $request->validate([
+            'post_category_id' => ['required', 'integer', Rule::exists('sub_categories', 'id')],
+            'post_title' => ['required', 'string', 'max:100'],
+            'post_body' => ['required', 'string', 'max:2000'],
+        ]);
+
         $post = Post::create([
             'user_id' => Auth::id(),
+            'post_category_id' => $request->post_category_id,
             'post_title' => $request->post_title,
             'post' => $request->post_body
         ]);
@@ -60,6 +68,7 @@ class PostsController extends Controller
     public function postEdit(Request $request){
         $request->validate([
             'post_id' => ['required', 'integer', 'exists:posts,id'],
+            'post_category_id' => ['required', 'integer', Rule::exists('sub_categories', 'id')],
             'post_title' => ['required', 'string', 'max:100'],
             'post_body' => ['required', 'string', 'max:2000'],
         ]);
@@ -70,6 +79,7 @@ class PostsController extends Controller
                              ->withErrors('この投稿を編集する権限がありません。');
         }
         $post->update([
+            'post_category_id' => $request->post_category_id,
             'post_title' => $request->post_title,
             'post' => $request->post_body,
         ]);
@@ -89,6 +99,10 @@ class PostsController extends Controller
     }
 
     public function mainCategoryCreate(Request $request){
+        $request->validate([
+            'main_category_name' => 'required|string|max:100|unique:main_categories,main_category',
+        ]);
+
         MainCategory::create(['main_category' => $request->main_category_name]);
         return redirect()->route('post.input');
     }
@@ -139,5 +153,20 @@ class PostsController extends Controller
              ->delete();
 
         return response()->json();
+    }
+
+    public function subCategoryCreate(Request $request)
+    {
+    $request->validate([
+        'main_category_id' => ['required', 'integer', Rule::exists('main_categories', 'id')],
+        'sub_category_name' => ['required', 'string', 'max:100', Rule::unique('sub_categories', 'sub_category')],
+    ]);
+
+    SubCategory::create([
+        'main_category_id' => $request->main_category_id,
+        'sub_category' => $request->sub_category_name,
+    ]);
+
+    return redirect()->back()->with('message', 'サブカテゴリーを追加しました。');
     }
 }
