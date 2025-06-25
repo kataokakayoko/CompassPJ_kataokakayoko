@@ -83,4 +83,10 @@ class User extends Authenticatable
     public function likePostId(){
         return Like::where('like_user_id', Auth::id());
     }
+
+    public function likes()
+    {
+    return $this->hasMany(\App\Models\Posts\Like::class, 'like_user_id');
+    }
+
 }

@@ -17,24 +17,28 @@ use Auth;
 class PostsController extends Controller
 {
     public function show(Request $request){
-        $posts = Post::with('user', 'postComments')->get();
         $categories = MainCategory::get();
         $like = new Like;
         $post_comment = new Post;
         if(!empty($request->keyword)){
-            $posts = Post::with('user', 'postComments')
-            ->where('post_title', 'like', '%'.$request->keyword.'%')
-            ->orWhere('post', 'like', '%'.$request->keyword.'%')->get();
-        }else if($request->category_word){
+            $posts = Post::with('user', 'postComments')->withCount(['likes', 'postComments'])
+                ->where('post_title', 'like', '%'.$request->keyword.'%')
+                ->orWhere('post', 'like', '%'.$request->keyword.'%')
+                ->get();
+        } else if($request->category_word){
             $sub_category = $request->category_word;
-            $posts = Post::with('user', 'postComments')->get();
-        }else if($request->like_posts){
+            $posts = Post::with('user', 'postComments')->withCount(['likes', 'postComments'])->get();
+        } else if($request->like_posts){
             $likes = Auth::user()->likePostId()->get('like_post_id');
-            $posts = Post::with('user', 'postComments')
-            ->whereIn('id', $likes)->get();
-        }else if($request->my_posts){
-            $posts = Post::with('user', 'postComments')
-            ->where('user_id', Auth::id())->get();
+            $posts = Post::with('user', 'postComments')->withCount(['likes', 'postComments'])
+                ->whereIn('id', $likes)
+                ->get();
+        } else if($request->my_posts){
+            $posts = Post::with('user', 'postComments')->withCount(['likes', 'postComments'])
+                ->where('user_id', Auth::id())
+                ->get();
+        } else {
+            $posts = Post::with('user', 'postComments')->withCount(['likes', 'postComments'])->get();
         }
         return view('authenticated.bulletinboard.posts', compact('posts', 'categories', 'like', 'post_comment'));
     }
@@ -108,6 +112,10 @@ class PostsController extends Controller
     }
 
     public function commentCreate(Request $request){
+        $request->validate([
+            'comment' => ['required', 'string', 'max:250'],
+            'post_id' => ['required', 'integer', 'exists:posts,id'],
+        ]);
         PostComment::create([
             'post_id' => $request->post_id,
             'user_id' => Auth::id(),
@@ -157,16 +165,16 @@ class PostsController extends Controller
 
     public function subCategoryCreate(Request $request)
     {
-    $request->validate([
-        'main_category_id' => ['required', 'integer', Rule::exists('main_categories', 'id')],
-        'sub_category_name' => ['required', 'string', 'max:100', Rule::unique('sub_categories', 'sub_category')],
-    ]);
+        $request->validate([
+            'main_category_id' => ['required', 'integer', Rule::exists('main_categories', 'id')],
+            'sub_category_name' => ['required', 'string', 'max:100', Rule::unique('sub_categories', 'sub_category')],
+        ]);
 
-    SubCategory::create([
-        'main_category_id' => $request->main_category_id,
-        'sub_category' => $request->sub_category_name,
-    ]);
+        SubCategory::create([
+            'main_category_id' => $request->main_category_id,
+            'sub_category' => $request->sub_category_name,
+        ]);
 
-    return redirect()->back()->with('message', 'サブカテゴリーを追加しました。');
+        return redirect()->back()->with('message', 'サブカテゴリーを追加しました。');
     }
 }

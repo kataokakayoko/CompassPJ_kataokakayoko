@@ -59,6 +59,11 @@
     <div class="comment_container border m-5">
       <div class="comment_area p-3">
         <p class="m-0">コメントする</p>
+        @if ($errors->has('comment'))
+      <div class="alert alert-danger">
+        {{ $errors->first('comment') }}
+      </div>
+        @endif
         <textarea class="w-100" name="comment" form="commentRequest"></textarea>
         <input type="hidden" name="post_id" form="commentRequest" value="{{ $post->id }}">
         <input type="submit" class="btn btn-primary" form="commentRequest" value="投稿">
