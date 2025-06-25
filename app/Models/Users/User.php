@@ -75,7 +75,6 @@ class User extends Authenticatable
             )->withTimestamps();
     }
 
-    // いいねしているかどうか
     public function is_Like($post_id){
         return Like::where('like_user_id', Auth::id())->where('like_post_id', $post_id)->first(['likes.id']);
     }

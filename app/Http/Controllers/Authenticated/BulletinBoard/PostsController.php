@@ -10,6 +10,7 @@ use App\Models\Posts\Post;
 use App\Models\Posts\PostComment;
 use App\Models\Posts\Like;
 use App\Models\Users\User;
+use App\Models\Users\Subjects;
 use App\Http\Requests\BulletinBoard\PostFormRequest;
 use Illuminate\Validation\Rule;
 use Auth;
@@ -20,27 +21,44 @@ class PostsController extends Controller
         $categories = MainCategory::get();
         $like = new Like;
         $post_comment = new Post;
-        if(!empty($request->keyword)){
-            $posts = Post::with('user', 'postComments')->withCount(['likes', 'postComments'])
-                ->where('post_title', 'like', '%'.$request->keyword.'%')
-                ->orWhere('post', 'like', '%'.$request->keyword.'%')
-                ->get();
-        } else if($request->category_word){
-            $sub_category = $request->category_word;
-            $posts = Post::with('user', 'postComments')->withCount(['likes', 'postComments'])->get();
-        } else if($request->like_posts){
-            $likes = Auth::user()->likePostId()->get('like_post_id');
-            $posts = Post::with('user', 'postComments')->withCount(['likes', 'postComments'])
-                ->whereIn('id', $likes)
-                ->get();
-        } else if($request->my_posts){
-            $posts = Post::with('user', 'postComments')->withCount(['likes', 'postComments'])
-                ->where('user_id', Auth::id())
-                ->get();
-        } else {
-            $posts = Post::with('user', 'postComments')->withCount(['likes', 'postComments'])->get();
+        $subjects = Subjects::all();
+        $query = Post::with('user', 'postComments')->withCount(['likes', 'postComments']);
+        if (!empty($request->subject_id)) {
+            $subjectId = $request->subject_id;
+            $query->whereHas('user.subjects', function($q) use ($subjectId) {
+                $q->where('subject_id', $subjectId);
+            });
         }
-        return view('authenticated.bulletinboard.posts', compact('posts', 'categories', 'like', 'post_comment'));
+        if (!empty($request->keyword)) {
+            $subCategory = SubCategory::where('sub_category', $request->keyword)->first();
+            if ($subCategory) {
+                $query->whereHas('subCategories', function($q) use ($subCategory) {
+                    $q->where('sub_category_id', $subCategory->id);
+                });
+            } else {
+                $query->where(function($q) use ($request) {
+                    $q->where('post_title', 'like', '%' . $request->keyword . '%')
+                      ->orWhere('post', 'like', '%' . $request->keyword . '%');
+                });
+            }
+        }
+        else if ($request->like_posts) {
+            $likePostIds = Auth::user()->likePostId()->pluck('like_post_id')->toArray();
+            $query->whereIn('id', $likePostIds);
+        }
+        else if ($request->my_posts) {
+            $query->where('user_id', Auth::id());
+        }
+        else if ($request->sub_category_word) {
+            $subCategory = SubCategory::where('sub_category', $request->sub_category_word)->first();
+            if ($subCategory) {
+                $query->whereHas('subCategories', function($q) use ($subCategory) {
+                    $q->where('sub_category_id', $subCategory->id);
+                });
+            }
+        }
+        $posts = $query->get();
+        return view('authenticated.bulletinboard.posts', compact('posts', 'categories', 'like', 'post_comment', 'subjects'));
     }
 
     public function postDetail($post_id){
@@ -62,10 +80,10 @@ class PostsController extends Controller
 
         $post = Post::create([
             'user_id' => Auth::id(),
-            'post_category_id' => $request->post_category_id,
             'post_title' => $request->post_title,
             'post' => $request->post_body
         ]);
+        $post->subCategories()->attach($request->post_category_id);
         return redirect()->route('post.show');
     }
 
@@ -83,10 +101,10 @@ class PostsController extends Controller
                              ->withErrors('この投稿を編集する権限がありません。');
         }
         $post->update([
-            'post_category_id' => $request->post_category_id,
             'post_title' => $request->post_title,
             'post' => $request->post_body,
         ]);
+        $post->subCategories()->sync([$request->post_category_id]);
         return redirect()->route('post.detail', ['id' => $post->id])
                          ->with('message', '投稿を更新しました。');
     }
