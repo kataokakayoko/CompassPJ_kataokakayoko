@@ -14,6 +14,7 @@ use App\Models\Users\Subjects;
 use App\Http\Requests\BulletinBoard\PostFormRequest;
 use Illuminate\Validation\Rule;
 use Auth;
+use Illuminate\Support\Facades\Validator;
 
 class PostsController extends Controller
 {
@@ -88,27 +89,40 @@ class PostsController extends Controller
     }
 
     public function postEdit(Request $request)
-    {
-    $request->validate([
+{
+    $validator = Validator::make($request->all(), [
         'post_id' => ['required', 'integer', 'exists:posts,id'],
         'post_category_id' => ['required', 'integer', Rule::exists('sub_categories', 'id')],
         'post_title' => ['required', 'string', 'max:100'],
         'post_body' => ['required', 'string', 'max:2000'],
     ]);
-    $post = Post::findOrFail($request->post_id);
+
+    if ($validator->fails()) {
+        $post = Post::find($request->post_id);
+
+        return redirect()->route('post.detail', ['id' => $request->post_id])
+            ->withErrors($validator)
+            ->withInput()
+            ->with('editPost', $post);
+    }
+
+    $validated = $validator->validated();
+    $post = Post::findOrFail($validated['post_id']);
+
     if ($post->user_id !== Auth::id()) {
         return redirect()->route('post.detail', ['id' => $post->id])
                          ->withErrors('この投稿を編集する権限がありません。');
     }
+
     $post->update([
-        'post_title' => $request->post_title,
-        'post' => $request->post_body,
+        'post_title' => $validated['post_title'],
+        'post' => $validated['post_body'],
     ]);
-    $post->subCategories()->sync([$request->post_category_id]);
+    $post->subCategories()->sync([$validated['post_category_id']]);
+
     return redirect()->route('post.detail', ['id' => $post->id])
                      ->with('message', '投稿を更新しました。');
-    }
-
+}
 
     public function destroy($id){
         $post = Post::findOrFail($id);
