@@ -87,27 +87,28 @@ class PostsController extends Controller
         return redirect()->route('post.show');
     }
 
-    public function postEdit(Request $request){
-        $request->validate([
-            'post_id' => ['required', 'integer', 'exists:posts,id'],
-            'post_category_id' => ['required', 'integer', Rule::exists('sub_categories', 'id')],
-            'post_title' => ['required', 'string', 'max:100'],
-            'post_body' => ['required', 'string', 'max:2000'],
-        ]);
-        $post = Post::findOrFail($request->post_id);
-
-        if ($post->user_id !== Auth::id()) {
-            return redirect()->route('post.detail', ['id' => $post->id])
-                             ->withErrors('この投稿を編集する権限がありません。');
-        }
-        $post->update([
-            'post_title' => $request->post_title,
-            'post' => $request->post_body,
-        ]);
-        $post->subCategories()->sync([$request->post_category_id]);
+    public function postEdit(Request $request)
+    {
+    $request->validate([
+        'post_id' => ['required', 'integer', 'exists:posts,id'],
+        'post_category_id' => ['required', 'integer', Rule::exists('sub_categories', 'id')],
+        'post_title' => ['required', 'string', 'max:100'],
+        'post_body' => ['required', 'string', 'max:2000'],
+    ]);
+    $post = Post::findOrFail($request->post_id);
+    if ($post->user_id !== Auth::id()) {
         return redirect()->route('post.detail', ['id' => $post->id])
-                         ->with('message', '投稿を更新しました。');
+                         ->withErrors('この投稿を編集する権限がありません。');
     }
+    $post->update([
+        'post_title' => $request->post_title,
+        'post' => $request->post_body,
+    ]);
+    $post->subCategories()->sync([$request->post_category_id]);
+    return redirect()->route('post.detail', ['id' => $post->id])
+                     ->with('message', '投稿を更新しました。');
+    }
+
 
     public function destroy($id){
         $post = Post::findOrFail($id);

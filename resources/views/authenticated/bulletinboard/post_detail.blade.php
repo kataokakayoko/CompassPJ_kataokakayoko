@@ -4,35 +4,38 @@
     <div class="m-3 detail_container">
       <div class="p-3">
         <div class="detail_inner_head">
+          <div></div>
           <div>
-          </div>
-          <div>
-          @if(Auth::id() === $post->user_id)
-            <span class="edit-modal-open" data-post_title="{{ $post->post_title }}" data-post_body="{{ $post->post }}" data-post_id="{{ $post->id }}">編集</span>
-            <button type="button" class="delete-modal-open btn btn-link text-danger" data-post-id="{{ $post->id }}">削除</button>
-          @endif
+            @if(Auth::id() === $post->user_id)
+              <span class="edit-modal-open"
+                    data-post_title="{{ $post->post_title }}"
+                    data-post_body="{{ $post->post }}"
+                    data-post_id="{{ $post->id }}"
+                    style="cursor:pointer;">
+                編集
+              </span>
+              <button type="button" class="delete-modal-open btn btn-link text-danger" data-post-id="{{ $post->id }}">削除</button>
+            @endif
           </div>
         </div>
-      <div class="modal js-delete-modal">
-        <div class="modal__bg js-delete-modal-close"></div>
+        <div class="modal js-delete-modal">
+          <div class="modal__bg js-delete-modal-close"></div>
           <div class="modal__content">
             <p>この投稿を削除してもよろしいですか？</p>
-              <div class="text-center">
+            <div class="text-center">
               <form id="deleteForm" method="POST" action="">
-              @csrf
-              @method('DELETE')
-            <button type="submit" class="btn btn-danger">削除する</button>
-          <a class="btn btn-secondary js-delete-modal-close" href="#">キャンセル</a>
-          </form>
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">削除する</button>
+                <a class="btn btn-secondary js-delete-modal-close" href="#">キャンセル</a>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-
         <div class="contributor d-flex">
           <p>
             <span>{{ $post->user->over_name }}</span>
-            <span>{{ $post->user->under_name }}</span>
-            さん
+            <span>{{ $post->user->under_name }}</span>さん
           </p>
           <span class="ml-5">{{ $post->created_at }}</span>
         </div>
@@ -41,15 +44,15 @@
       </div>
       <div class="p-3">
         <div class="comment_container">
-          <span class="">コメント</span>
+          <span>コメント</span>
           @foreach($post->postComments as $comment)
-          <div class="comment_area border-top">
-            <p>
-              <span>{{ $comment->commentUser($comment->user_id)->over_name }}</span>
-              <span>{{ $comment->commentUser($comment->user_id)->under_name }}</span>さん
-            </p>
-            <p>{{ $comment->comment }}</p>
-          </div>
+            <div class="comment_area border-top">
+              <p>
+                <span>{{ $comment->commentUser($comment->user_id)->over_name }}</span>
+                <span>{{ $comment->commentUser($comment->user_id)->under_name }}</span>さん
+              </p>
+              <p>{{ $comment->comment }}</p>
+            </div>
           @endforeach
         </div>
       </div>
@@ -60,9 +63,7 @@
       <div class="comment_area p-3">
         <p class="m-0">コメントする</p>
         @if ($errors->has('comment'))
-      <div class="alert alert-danger">
-        {{ $errors->first('comment') }}
-      </div>
+          <div class="alert alert-danger">{{ $errors->first('comment') }}</div>
         @endif
         <textarea class="w-100" name="comment" form="commentRequest"></textarea>
         <input type="hidden" name="post_id" form="commentRequest" value="{{ $post->id }}">
@@ -72,20 +73,21 @@
     </div>
   </div>
 </div>
-<div class="modal js-modal">
+
+<div class="modal js-modal" style="display:none;">
   <div class="modal__bg js-modal-close"></div>
   <div class="modal__content">
     <form action="{{ route('post.edit') }}" method="post">
       <div class="w-100">
         <div class="modal-inner-title w-50 m-auto">
-          <input type="text" name="post_title" placeholder="タイトル" class="w-100">
+          <input type="text" name="post_title" placeholder="タイトル" class="w-100" value="{{ old('post_title', $post->post_title) }}">
         </div>
         <div class="modal-inner-body w-50 m-auto pt-3 pb-3">
-          <textarea placeholder="投稿内容" name="post_body" class="w-100"></textarea>
+          <textarea placeholder="投稿内容" name="post_body" class="w-100">{{ old('post_body', $post->post) }}</textarea>
         </div>
         <div class="w-50 m-auto edit-modal-btn d-flex">
-          <a class="js-modal-close btn btn-danger d-inline-block" href="">閉じる</a>
-          <input type="hidden" class="edit-modal-hidden" name="post_id" value="">
+          <a class="js-modal-close btn btn-danger d-inline-block" href="javascript:void(0);">閉じる</a>
+          <input type="hidden" class="edit-modal-hidden" name="post_id" value="{{ $post->id }}">
           <input type="submit" class="btn btn-primary d-block" value="編集">
         </div>
       </div>
