@@ -281,3 +281,13 @@ li {
 .subject-item {
   font-size: 12px;
 }
+
+.subject-checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.subject-checkbox-wrapper span {
+  margin-right: 8px;
+}

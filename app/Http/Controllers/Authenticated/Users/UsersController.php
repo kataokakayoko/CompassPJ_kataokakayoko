@@ -20,11 +20,11 @@ class UsersController extends Controller
         $updown = $request->updown;
         $gender = $request->sex;
         $role = $request->role;
-        $subjects = null;
+        $selectedSubjects = $request->subjects;
         $userFactory = new SearchResultFactories();
-        $users = $userFactory->initializeUsers($keyword, $category, $updown, $gender, $role, $subjects);
+        $users = $userFactory->initializeUsers($keyword, $category, $updown, $gender, $role, $selectedSubjects);
         $subjects = Subjects::all();
-        return view('authenticated.users.search', compact('users', 'subjects'));
+        return view('authenticated.users.search', compact('users', 'subjects', 'selectedSubjects'));
     }
 
     public function userProfile($id){
