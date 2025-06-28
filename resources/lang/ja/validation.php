@@ -106,15 +106,34 @@ return [
     'url' => ':attributeは有効なURL形式で指定してください。',
     'uuid' => ':attributeは有効なUUIDで指定してください。',
 
-    // カスタムメッセージや属性名の日本語化も追記可
     'custom' => [
-        //
+        'post_category_id' => [
+            'required' => 'カテゴリーを選択してください。',
+            'exists' => '有効なカテゴリーを選択してください。',
+        ],
+        'main_category_id' => [
+            'required' => 'メインカテゴリーを選択してください。',
+            'exists' => '有効なメインカテゴリーを選択してください。',
+        ],
+        'sub_category_name' => [
+            'required' => 'サブカテゴリー名は必須です。',
+            'max' => 'サブカテゴリー名は:max文字以内で入力してください。',
+            'unique' => 'このサブカテゴリー名は既に存在します。',
+        ],
+        'main_category_name' => [
+            'required' => 'メインカテゴリー名は必須です。',
+            'max' => 'メインカテゴリー名は:max文字以内で指定してください。',
+            'unique' => 'このメインカテゴリー名は既に存在します。',
+        ],
     ],
 
     'attributes' => [
         'post_title' => 'タイトル',
         'post_body' => '投稿内容',
         'post_category_id' => 'カテゴリー',
+        'main_category_id' => 'メインカテゴリー',
+        'sub_category_name' => 'サブカテゴリー名',
         'comment' => 'コメント',
+        'main_category_name' => 'メインカテゴリー名',
     ],
 ];

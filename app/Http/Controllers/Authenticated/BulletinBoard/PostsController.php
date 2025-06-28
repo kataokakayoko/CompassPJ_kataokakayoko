@@ -139,9 +139,8 @@ class PostsController extends Controller
         $request->validate([
             'main_category_name' => 'required|string|max:100|unique:main_categories,main_category',
         ]);
-
         MainCategory::create(['main_category' => $request->main_category_name]);
-        return redirect()->route('post.input');
+        return redirect()->route('post.input')->with('message', 'メインカテゴリーを追加しました。');
     }
 
     public function commentCreate(Request $request){
@@ -198,16 +197,17 @@ class PostsController extends Controller
 
     public function subCategoryCreate(Request $request)
     {
-        $request->validate([
-            'main_category_id' => ['required', 'integer', Rule::exists('main_categories', 'id')],
-            'sub_category_name' => ['required', 'string', 'max:100', Rule::unique('sub_categories', 'sub_category')],
-        ]);
+    $request->validate([
+        'main_category_id' => ['required', 'integer', Rule::exists('main_categories', 'id')],
+        'sub_category_name' => ['required', 'string', 'max:100', Rule::unique('sub_categories', 'sub_category')],
+    ]);
 
-        SubCategory::create([
-            'main_category_id' => $request->main_category_id,
-            'sub_category' => $request->sub_category_name,
-        ]);
+    SubCategory::create([
+        'main_category_id' => $request->main_category_id,
+        'sub_category' => $request->sub_category_name,
+    ]);
 
-        return redirect()->back()->with('message', 'サブカテゴリーを追加しました。');
+    return redirect()->back()->with('message', 'サブカテゴリーを追加しました。');
     }
+
 }
