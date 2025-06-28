@@ -23,7 +23,7 @@ class SearchResultFactories{
       return $searchResults->resultUsers($keyword, $category, $updown, $gender, $role, $subjects);
     }else{
       $allUsers = new AllUsers();
-    return $allUsers->resultUsers($keyword, $category, $updown, $gender, $role, $subjects);
+      return $allUsers->resultUsers($keyword, $category, $updown, $gender, $role, $subjects);
     }
   }
 }
