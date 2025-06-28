@@ -42,12 +42,17 @@
         @endif
       </div>
       <div>
-        @if($user->role == 4)
-        <span>選択科目 :</span>
-        @endif
+      @if($user->role == 4)
+      <span>選択科目 :</span>
+      @if(!$user->subjects->isEmpty())
+      @foreach($user->subjects as $subject)
+      <span class="subject-item">{{ $subject->subject }}@if(!$loop->last) @endif
+      @endforeach
+      @endif
+      @endif
       </div>
-    </div>
-    @endforeach
+      </div>
+      @endforeach
   </div>
   <div class="search_area w-25 border">
     <div class="">

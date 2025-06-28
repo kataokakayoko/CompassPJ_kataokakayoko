@@ -277,3 +277,7 @@ li {
 .subject_inner {
   display: none;
 }
+
+.subject-item {
+  font-size: 12px;
+}
