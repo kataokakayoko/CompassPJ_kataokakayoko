@@ -80,6 +80,11 @@ li {
   width: 70%;
 }
 
+.calendar-past-day {
+  background-color: #f0f0f0;
+  color: #888;
+}
+
 /* モーダル */
 .modal {
   display: none;

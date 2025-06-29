@@ -30,22 +30,22 @@ class CalendarView{
     $html[] = '</tr>';
     $html[] = '</thead>';
     $html[] = '<tbody>';
-
     $weeks = $this->getWeeks();
-
     foreach($weeks as $week){
       $html[] = '<tr class="'.$week->getClassName().'">';
       $days = $week->getDays();
-      foreach($days as $day){
-        $startDay = $this->carbon->format("Y-m-01");
-        $toDay = $this->carbon->format("Y-m-d");
-        if($startDay <= $day->everyDay() && $toDay >= $day->everyDay()){
-          $html[] = '<td class="past-day border">';
-        }else{
-          $html[] = '<td class="border '.$day->getClassName().'">';
-        }
+      foreach ($days as $day) {
+        $dayDate = $day->everyDay();
+        $today = Carbon::today()->format('Y-m-d');
+        $isPast = $dayDate < $today;
+        $tdClass = $isPast ? 'calendar-past-day border' : 'border ' . $day->getClassName();
+        $html[] = '<td class="' . $tdClass . '">';
         $html[] = $day->render();
-        $html[] = $day->dayPartCounts($day->everyDay());
+        if ($isPast) {
+            $html[] = $day->dayPastPartsInfo($dayDate);
+        } else {
+            $html[] = $day->dayPartCounts($dayDate);
+        }
         $html[] = '</td>';
       }
       $html[] = '</tr>';
