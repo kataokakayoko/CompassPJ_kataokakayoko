@@ -17,9 +17,8 @@ class CreateSubjectUsersTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->comment('ユーザーID');
             $table->integer('subject_id')->unsigned()->comment('選択科目ID');
-            $table->timestamps(); // created_at と updated_at を自動で追加
+            $table->timestamps();
 
-            // 外部キー制約の追加
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
         });

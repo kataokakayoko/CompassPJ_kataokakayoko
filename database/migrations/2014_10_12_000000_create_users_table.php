@@ -20,13 +20,13 @@ class CreateUsersTable extends Migration
             $table->string('over_name_kana', 60)->index()->comment('セイ');
             $table->string('under_name_kana', 60)->index()->comment('メイ');
             $table->string('mail_address', 60)->unique()->comment('メールアドレス');
-            $table->tinyInteger('sex')->index()->comment('性別'); // tinyIntegerでDB最適化
+            $table->tinyInteger('sex')->index()->comment('性別');
             $table->date('birth_day')->index()->comment('生年月日');
-            $table->tinyInteger('role')->index()->comment('権限'); // tinyIntegerでDB最適化
+            $table->tinyInteger('role')->index()->comment('権限');
             $table->string('password', 191)->comment('パスワード');
             $table->rememberToken();
-            $table->timestamps(); // created_at と updated_at を自動で追加
-            $table->softDeletes()->comment('削除日時'); // deleted_at を自動で追加
+            $table->timestamps();
+            $table->softDeletes()->comment('削除日時');
         });
     }
 
