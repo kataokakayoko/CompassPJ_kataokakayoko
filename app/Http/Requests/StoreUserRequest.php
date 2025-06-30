@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 class StoreUserRequest extends FormRequest
 {
@@ -26,7 +27,7 @@ class StoreUserRequest extends FormRequest
             'old_day' => ['required', Rule::in(range(1, 31))],
             'role' => ['required', Rule::in([1, 2, 3, 4])],
             'password' => ['required', 'string', 'min:8', 'max:30', 'confirmed'],
-            'subject' => ['sometimes', 'array'], // role=4時のみ科目選択
+            'subject' => ['sometimes', 'array'],
             'subject.*' => ['integer', 'exists:subjects,id'],
         ];
     }
@@ -68,6 +69,15 @@ class StoreUserRequest extends FormRequest
 
         if (!checkdate($month, $day, $year)) {
             $this->validator->errors()->add('old_day', '正しい日付を入力してください。');
+            throw new \Illuminate\Validation\ValidationException($this->validator);
+        }
+
+        $birthDate = Carbon::createFromDate($year, $month, $day);
+        $minDate = Carbon::create(2000, 1, 1);
+        $maxDate = Carbon::today();
+
+        if ($birthDate->lt($minDate) || $birthDate->gt($maxDate)) {
+            $this->validator->errors()->add('old_day', '生年月日は2000年1月1日から今日までの日付を入力してください。');
             throw new \Illuminate\Validation\ValidationException($this->validator);
         }
     }
