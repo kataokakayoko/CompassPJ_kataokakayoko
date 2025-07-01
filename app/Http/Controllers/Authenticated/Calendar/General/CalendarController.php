@@ -17,7 +17,6 @@ class CalendarController extends Controller
         $calendar = new CalendarView(time());
         return view('authenticated.calendar.general.calendar', compact('calendar'));
     }
-
     public function reserve(Request $request){
         DB::beginTransaction();
         try{
@@ -34,5 +33,26 @@ class CalendarController extends Controller
             DB::rollback();
         }
         return redirect()->route('calendar.general.show', ['user_id' => Auth::id()]);
+    }
+    public function delete(Request $request)
+    {
+    DB::beginTransaction();
+    try {
+        $deleteDate = $request->input('delete_date');
+        $reserve = ReserveSettings::where('setting_reserve', $deleteDate)
+            ->whereHas('users', function ($query) {
+                $query->where('user_id', Auth::id());
+            })->first();
+
+        if ($reserve) {
+            $reserve->users()->detach(Auth::id());
+            $reserve->increment('limit_users');
+        }
+        DB::commit();
+    } catch (\Exception $e) {
+        DB::rollback();
+        return redirect()->back()->with('error', 'キャンセル処理中にエラーが発生しました');
+    }
+    return redirect()->back()->with('message', '予約をキャンセルしました');
     }
 }
