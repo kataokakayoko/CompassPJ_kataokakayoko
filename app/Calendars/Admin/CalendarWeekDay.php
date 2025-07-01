@@ -6,7 +6,6 @@ use App\Models\Calendars\ReserveSettings;
 
 class CalendarWeekDay{
   protected $carbon;
-
   function __construct($date){
     $this->carbon = new Carbon($date);
   }
@@ -25,25 +24,34 @@ class CalendarWeekDay{
 
   function dayPartCounts($ymd){
     $html = [];
-    $one_part = ReserveSettings::with('users')->where('setting_reserve', $ymd)->where('setting_part', '1')->first();
-    $two_part = ReserveSettings::with('users')->where('setting_reserve', $ymd)->where('setting_part', '2')->first();
-    $three_part = ReserveSettings::with('users')->where('setting_reserve', $ymd)->where('setting_part', '3')->first();
-
+    $one_part = ReserveSettings::withCount('users')->where('setting_reserve', $ymd)->where('setting_part', '1')->first();
+    $two_part = ReserveSettings::withCount('users')->where('setting_reserve', $ymd)->where('setting_part', '2')->first();
+    $three_part = ReserveSettings::withCount('users')->where('setting_reserve', $ymd)->where('setting_part', '3')->first();
     $html[] = '<div class="text-left">';
     if($one_part){
-      $html[] = '<p class="day_part m-0 pt-1">1部</p>';
+      $html[] = '<p class="day_part m-0 pt-1">
+                   <a href="/admin/calendar/'.$ymd.'/1" class="text-decoration-none text-dark">
+                     1部
+                   </a>：' . $one_part->limit_users . '
+                 </p>';
     }
     if($two_part){
-      $html[] = '<p class="day_part m-0 pt-1">2部</p>';
+      $html[] = '<p class="day_part m-0 pt-1">
+                   <a href="/admin/calendar/'.$ymd.'/2" class="text-decoration-none text-dark">
+                     2部
+                   </a>：' . $two_part->limit_users . '
+                 </p>';
     }
     if($three_part){
-      $html[] = '<p class="day_part m-0 pt-1">3部</p>';
+      $html[] = '<p class="day_part m-0 pt-1">
+                   <a href="/admin/calendar/'.$ymd.'/3" class="text-decoration-none text-dark">
+                     3部
+                   </a>：' . $three_part->limit_users . '
+                 </p>';
     }
     $html[] = '</div>';
-
     return implode("", $html);
   }
-
 
   function onePartFrame($day){
     $one_part_frame = ReserveSettings::where('setting_reserve', $day)->where('setting_part', '1')->first();
