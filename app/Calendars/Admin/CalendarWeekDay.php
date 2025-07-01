@@ -83,36 +83,4 @@ class CalendarWeekDay{
     $html[] = '</div>';
     return implode('', $html);
   }
-
-  function dayPastPartsInfo($ymd){
-    $html = [];
-    $html[] = '<div class="text-left text-muted">';
-
-    $one_part = ReserveSettings::with('users')->where('setting_reserve', $ymd)->where('setting_part', '1')->first();
-    $two_part = ReserveSettings::with('users')->where('setting_reserve', $ymd)->where('setting_part', '2')->first();
-    $three_part = ReserveSettings::with('users')->where('setting_reserve', $ymd)->where('setting_part', '3')->first();
-
-    $displayed = false;
-
-    if ($one_part) {
-        $html[] = '<p class="day_part m-0 pt-1">1部</p>';
-        $displayed = true;
-    }
-    if ($two_part) {
-        $html[] = '<p class="day_part m-0 pt-1">2部</p>';
-        $displayed = true;
-    }
-    if ($three_part) {
-        $html[] = '<p class="day_part m-0 pt-1">3部</p>';
-        $displayed = true;
-    }
-
-    if (!$displayed) {
-        $html[] = '<p class="m-0 pt-1">受付終了</p>';
-    }
-
-    $html[] = '</div>';
-    return implode("", $html);
-}
-
 }

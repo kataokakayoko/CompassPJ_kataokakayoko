@@ -44,6 +44,10 @@ Route::group(['middleware' => 'auth'], function(){
             });
         });
         Route::namespace('BulletinBoard')->group(function(){
+            Route::get('/modal-test', function () {
+                return view('test_modal');
+            });
+
             Route::get('bulletin_board/posts/{keyword?}', [PostsController::class, 'show'])->name('post.show');
             Route::get('bulletin_board/input', [PostsController::class, 'postInput'])->name('post.input');
             Route::get('bulletin_board/like', [PostsController::class, 'likeBulletinBoard'])->name('like.bulletin.board');

@@ -80,14 +80,15 @@ li {
   width: 70%;
 }
 
-.calendar-past-day {
-  background-color: #f0f0f0;
-  color: #888;
+.calendar-disabled {
+  background-color: #e9ecef !important;
+  color: #6c757d !important;
+  pointer-events: none;
 }
 
 /* モーダル */
 .modal {
-  display: none;
+  /* display: none; */
   height: 100vh;
   position: fixed;
   top: 0;

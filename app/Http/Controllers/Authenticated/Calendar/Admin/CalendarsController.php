@@ -26,6 +26,7 @@ class CalendarsController extends Controller
 
     public function reserveSettings(){
         $calendar = new CalendarSettingView(time());
+        $day = date('Y-m-d');
         return view('authenticated.calendar.admin.reserve_setting', compact('calendar'));
     }
 

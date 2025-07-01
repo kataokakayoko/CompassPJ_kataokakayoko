@@ -86,4 +86,33 @@ class CalendarWeekDay{
      return Auth::user()->reserveSettings->where('setting_reserve', $reserveDate);
    }
 
+   public function remainingCapacity()
+  {
+    $ymd = $this->carbon->format('Y-m-d');
+
+    $one_part = ReserveSettings::with('users')->where('setting_reserve', $ymd)->where('setting_part', 1)->first();
+    $two_part = ReserveSettings::with('users')->where('setting_reserve', $ymd)->where('setting_part', 2)->first();
+    $three_part = ReserveSettings::with('users')->where('setting_reserve', $ymd)->where('setting_part', 3)->first();
+
+    return [
+        1 => $one_part ? $one_part->limit_users - $one_part->users->count() : 0,
+        2 => $two_part ? $two_part->limit_users - $two_part->users->count() : 0,
+        3 => $three_part ? $three_part->limit_users - $three_part->users->count() : 0,
+    ];
+  }
+
+  public function reserveLabel()
+  {
+     $part = $this->reservedPart();
+     $reserve = $this->authReserveDate($this->everyDay())->first();
+
+     $location = $reserve->location_name ?? '';
+     $partLabel = match ($part) {
+        1 => 'リモ1部',
+        2 => 'リモ2部',
+        3 => 'リモ3部',
+        default => '',
+     };
+     return trim($location . ' ' . $partLabel);
+  }
 }
