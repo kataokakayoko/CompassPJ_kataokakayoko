@@ -61,24 +61,26 @@ class StoreUserRequest extends FormRequest
         ];
     }
 
-    protected function passedValidation()
+    public function withValidator($validator)
     {
-        $year = (int)$this->input('old_year');
-        $month = (int)$this->input('old_month');
-        $day = (int)$this->input('old_day');
+        $validator->after(function ($validator) {
+            $year = (int)$this->input('old_year');
+            $month = (int)$this->input('old_month');
+            $day = (int)$this->input('old_day');
 
-        if (!checkdate($month, $day, $year)) {
-            $this->validator->errors()->add('old_day', '正しい日付を入力してください。');
-            throw new \Illuminate\Validation\ValidationException($this->validator);
-        }
+            if (!checkdate($month, $day, $year)) {
+                $validator->errors()->add('old_day', '正しい日付を入力してください。');
+                return;
+            }
 
-        $birthDate = Carbon::createFromDate($year, $month, $day);
-        $minDate = Carbon::create(2000, 1, 1);
-        $maxDate = Carbon::today();
+            $birthDate = Carbon::createFromDate($year, $month, $day);
+            $minDate = Carbon::create(2000, 1, 1);
+            $maxDate = Carbon::today();
 
-        if ($birthDate->lt($minDate) || $birthDate->gt($maxDate)) {
-            $this->validator->errors()->add('old_day', '生年月日は2000年1月1日から今日までの日付を入力してください。');
-            throw new \Illuminate\Validation\ValidationException($this->validator);
-        }
+            if ($birthDate->lt($minDate) || $birthDate->gt($maxDate)) {
+                $validator->errors()->add('old_day', '生年月日は2000年1月1日から今日までの日付を入力してください。');
+            }
+        });
     }
+
 }
