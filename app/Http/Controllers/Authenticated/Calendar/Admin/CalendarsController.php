@@ -32,7 +32,11 @@ class CalendarsController extends Controller
 
     public function updateSettings(Request $request){
         $reserveDays = $request->input('reserve_day');
+
         foreach($reserveDays as $day => $parts){
+            if (strtotime($day) < strtotime(date('Y-m-d'))) {
+            continue;
+        }
             foreach($parts as $part => $frame){
                 ReserveSettings::updateOrCreate([
                     'setting_reserve' => $day,

@@ -45,14 +45,14 @@ class CalendarView{
         $startDay = $this->carbon->copy()->format("Y-m-01");
         $toDay = $this->carbon->copy()->format("Y-m-d");
 
-        if ($day->everyDay() < $today) {
+        if ($day->everyDay() <= $today) {
           $html[] = '<td class="calendar-td calendar-disabled">';
       } else {
           $html[] = '<td class="calendar-td '.$day->getClassName().'">';
       }
         $html[] = $day->render();
 
-        if ($day->everyDay() < $today) {
+        if ($day->everyDay() <= $today) {
           if (in_array($day->everyDay(), $day->authReserveDay())) {
               $reservePart = $day->authReserveDate($day->everyDay())->first()->setting_part;
               $reserveLabel = match ($reservePart) {
