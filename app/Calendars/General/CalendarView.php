@@ -63,7 +63,7 @@ class CalendarView{
               };
               $html[] = '<p class="text-muted small">'. $reserveLabel .'</p>';
           } else {
-              $html[] = '<p class="text-muted small">受付終了</p>';
+              $html[] = '<p class="small" style="color: black;">受付終了</p>';
           }
           $html[] = '<input type="hidden" name="getPart[]" value="" form="reserveParts">';
       } else {
