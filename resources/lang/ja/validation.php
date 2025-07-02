@@ -107,10 +107,10 @@ return [
     'uuid' => ':attributeは有効なUUIDで指定してください。',
 
     'custom' => [
-        'post_category_id' => [
-        'required' => 'サブカテゴリーを選択してください。',
-        'exists' => '選択されたサブカテゴリーは登録されていません。',
-    ],
+    //     'post_category_id' => [
+    //     'required' => 'サブカテゴリーを選択してください。',
+    //     'exists' => '選択されたサブカテゴリーは登録されていません。',
+    // ],
         'over_name' => [
         'required' => '姓を入力してください。',
         'max' => '姓は:max文字以内で入力してください。',

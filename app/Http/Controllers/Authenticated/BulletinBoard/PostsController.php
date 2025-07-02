@@ -74,7 +74,6 @@ class PostsController extends Controller
 
     public function postCreate(Request $request){
         $request->validate([
-            'post_category_id' => ['required', 'integer', Rule::exists('sub_categories', 'id')],
             'post_title' => ['required', 'string', 'max:100'],
             'post_body' => ['required', 'string', 'max:2000'],
         ]);
@@ -92,7 +91,6 @@ class PostsController extends Controller
 {
     $validator = Validator::make($request->all(), [
         'post_id' => ['required', 'integer', 'exists:posts,id'],
-        'post_category_id' => ['required', 'integer', Rule::exists('sub_categories', 'id')],
         'post_title' => ['required', 'string', 'max:100'],
         'post_body' => ['required', 'string', 'max:2000'],
     ]);
@@ -118,7 +116,9 @@ class PostsController extends Controller
         'post_title' => $validated['post_title'],
         'post' => $validated['post_body'],
     ]);
-    $post->subCategories()->sync([$validated['post_category_id']]);
+    if ($request->filled('post_category_id')) {
+        $post->subCategories()->sync([$request->post_category_id]);
+    }
 
     return redirect()->route('post.detail', ['id' => $post->id])
                      ->with('message', '投稿を更新しました。');

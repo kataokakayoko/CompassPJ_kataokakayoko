@@ -11,6 +11,7 @@
                 data-post_title="{{ e($post->post_title) }}"
                 data-post_body="{{ e($post->post) }}"
                 data-post_id="{{ $post->id }}"
+                data-post_category_id="{{ $post->post_category_id }}"
                 style="cursor:pointer;">
                 編集
             </span>

@@ -55,6 +55,7 @@ $(function () {
     $('#edit-post-title').val(post_title);
     $('#edit-post-body').val(post_body);
     $('#edit-post-id').val(post_id);
+    $('#edit-post-category-id').val($(this).data('post_category_id'));
     $('.js-modal').fadeIn();
     return false;
   });
