@@ -29,29 +29,31 @@ class CalendarWeekDay{
     $three_part = ReserveSettings::withCount('users')->where('setting_reserve', $ymd)->where('setting_part', '3')->first();
     $html[] = '<div class="text-left">';
     if($one_part){
-        $url = route('calendar.admin.detail', ['date' => $ymd, 'part' => 1]);
-        $html[] = '<p class="day_part m-0 pt-1">
-                     <a href="'.$url.'" class="text-primary text-decoration-underline">
-                       1部
-                     </a>：' . $one_part->limit_users . '
-                   </p>';
-    }
-    if($two_part){
-        $url = route('calendar.admin.detail', ['date' => $ymd, 'part' => 2]);
-        $html[] = '<p class="day_part m-0 pt-1">
-                     <a href="'.$url.'" class="text-primary text-decoration-underline">
-                       2部
-                     </a>：' . $two_part->limit_users . '
-                   </p>';
-    }
-    if($three_part){
-        $url = route('calendar.admin.detail', ['date' => $ymd, 'part' => 3]);
-        $html[] = '<p class="day_part m-0 pt-1">
-                     <a href="'.$url.'" class="text-primary text-decoration-underline">
-                       3部
-                     </a>：' . $three_part->limit_users . '
-                   </p>';
-    }
+      $url = route('calendar.admin.detail', ['date' => $ymd, 'part' => 1]);
+      $html[] = '<p class="day_part m-0 pt-1">
+                   <a href="'.$url.'" class="text-primary text-decoration-underline">
+                     1部
+                   </a>：' . $one_part->users_count . '
+                 </p>';
+  }
+
+  if($two_part){
+      $url = route('calendar.admin.detail', ['date' => $ymd, 'part' => 2]);
+      $html[] = '<p class="day_part m-0 pt-1">
+                   <a href="'.$url.'" class="text-primary text-decoration-underline">
+                     2部
+                   </a>：' . $two_part->users_count . '
+                 </p>';
+  }
+
+  if($three_part){
+      $url = route('calendar.admin.detail', ['date' => $ymd, 'part' => 3]);
+      $html[] = '<p class="day_part m-0 pt-1">
+                   <a href="'.$url.'" class="text-primary text-decoration-underline">
+                     3部
+                   </a>：' . $three_part->users_count . '
+                 </p>';
+  }
     $html[] = '</div>';
     return implode("", $html);
 }
@@ -94,5 +96,18 @@ class CalendarWeekDay{
     $html[] = '<p class="d-flex m-0 p-0">3部<input class="w-25" style="height:20px;" name="3" type="text" form="reserveSetting"></p>';
     $html[] = '</div>';
     return implode('', $html);
+  }
+
+  public function reservedUserCount($ymd){
+    $one_part = ReserveSettings::withCount('users')->where('setting_reserve', $ymd)->where('setting_part', '1')->first();
+    $two_part = ReserveSettings::withCount('users')->where('setting_reserve', $ymd)->where('setting_part', '2')->first();
+    $three_part = ReserveSettings::withCount('users')->where('setting_reserve', $ymd)->where('setting_part', '3')->first();
+
+    $count = 0;
+    if($one_part) $count += $one_part->users_count;
+    if($two_part) $count += $two_part->users_count;
+    if($three_part) $count += $three_part->users_count;
+
+    return $count;
   }
 }
