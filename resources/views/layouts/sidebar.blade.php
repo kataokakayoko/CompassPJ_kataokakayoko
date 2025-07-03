@@ -17,21 +17,63 @@
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     </head>
-    <body class="all_content">
-        <div class="d-flex">
-            <div class="sidebar">
-                <p><a href="{{ route('top.show') }}">トップ</a></p>
-                <p><a href="/logout">ログアウト</a></p>
-                <p><a href="{{ route('calendar.general.show',['user_id' => Auth::id()]) }}">スクール予約</a></p>
-
-                @if(Auth::check() && in_array(Auth::user()->role, [1, 2, 3]))
-                <p><a href="{{ route('calendar.admin.show',['user_id' => Auth::id()]) }}">スクール予約確認</a></p>
-                <p><a href="{{ route('calendar.admin.setting',['user_id' => Auth::id()]) }}">スクール枠登録</a></p>
-                @endif
-
-                <p><a href="{{ route('post.show') }}">掲示板</a></p>
-                <p><a href="{{ route('user.show') }}">ユーザー検索</a></p>
-            </div>
+    <style>
+        .sidebar-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="all_content">
+    <div class="d-flex">
+        <div class="sidebar">
+            <p>
+                <a href="{{ route('top.show') }}" style="display: block; margin-top: 10px;">
+                    <img src="{{ asset('image/マイページ.png') }}" alt="マイページ" class="sidebar-icon">
+                    マイページ
+                </a>
+            </p>
+            <p>
+                <a href="/logout">
+                    <img src="{{ asset('image/ログアウト.png') }}" alt="ログアウト" class="sidebar-icon">
+                    ログアウト
+                </a>
+            </p>
+            <p>
+                <a href="{{ route('calendar.general.show',['user_id' => Auth::id()]) }}">
+                    <img src="{{ asset('image/スクール予約.png') }}" alt="スクール予約" class="sidebar-icon">
+                    スクール予約
+                </a>
+            </p>
+            @if(Auth::check() && in_array(Auth::user()->role, [1, 2, 3]))
+            <p>
+                <a href="{{ route('calendar.admin.show',['user_id' => Auth::id()]) }}">
+                    <img src="{{ asset('image/スクール予約確認.png') }}" alt="スクール予約確認" class="sidebar-icon">
+                    スクール予約確認
+                </a>
+            </p>
+            <p>
+                <a href="{{ route('calendar.admin.setting',['user_id' => Auth::id()]) }}">
+                    <img src="{{ asset('image/スクール枠登録.png') }}" alt="スクール枠登録" class="sidebar-icon">
+                    スクール枠登録
+                </a>
+            </p>
+            @endif
+            <p>
+                <a href="{{ route('post.show') }}">
+                    <img src="{{ asset('image/掲示板.png') }}" alt="掲示板" class="sidebar-icon">
+                    掲示板
+                </a>
+            </p>
+            <p>
+                <a href="{{ route('user.show') }}">
+                    <img src="{{ asset('image/ユーザー検索.png') }}" alt="ユーザー検索" class="sidebar-icon">
+                    ユーザー検索
+                </a>
+            </p>
+        </div>
             <div class="main-container">
                 {{ $slot }}
             </div>
