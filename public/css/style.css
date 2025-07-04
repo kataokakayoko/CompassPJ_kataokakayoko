@@ -32,6 +32,10 @@ li {
   color: #FFF;
 }
 
+.sidebar-icon {
+  margin-left: 5px;
+}
+
 /* トップページ */
 .user_status {
   border-radius: 10px;
