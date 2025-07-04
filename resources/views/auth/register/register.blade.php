@@ -4,16 +4,6 @@
   <div class="w-100 vh-100 d-flex flex-column align-items-center justify-content-center" style="background: #ECF1F6;">
       <div class="w-25 vh-75 border p-3"style="background: #fff; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
 
-      @if ($errors->any())
-          <div class="alert alert-danger">
-            <ul class="mb-0" style="font-size:13px;">
-              @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-              @endforeach
-            </ul>
-          </div>
-        @endif
-
         <div class="register_form">
           <div class="d-flex mt-3" style="justify-content:space-between">
             <div class="" style="width:140px">
@@ -21,6 +11,9 @@
               <div class="border-bottom border-primary" style="width:140px;">
               <input type="text" style="width:140px;" class="border-0 over_name" name="over_name" value="{{ old('over_name') }}">
               </div>
+              @error('over_name')
+                <div class="text-danger" style="font-size:12px;">{{ $message }}</div>
+              @enderror
             </div>
             <div class="" style="width:140px">
               <label class=" d-block m-0" style="font-size:13px"><strong>名</strong></label>
