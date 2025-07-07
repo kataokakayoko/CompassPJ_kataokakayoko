@@ -13,7 +13,7 @@
 /* harmony export */   Alpine: () => (/* binding */ src_default),
 /* harmony export */   "default": () => (/* binding */ module_default)
           /* harmony export */
-});
+        });
         // packages/alpinejs/src/scheduler.js
         var flushPending = false;
         var flushing = false;
@@ -3401,7 +3401,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
@@ -3420,7 +3420,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"].start();
 
         /***/
-}),
+      }),
 
 /***/ "./resources/js/bootstrap.js":
 /*!***********************************!*\
@@ -3457,7 +3457,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         // });
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/base64-js/index.js":
 /*!*****************************************!*\
@@ -3619,7 +3619,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/buffer/index.js":
 /*!**************************************!*\
@@ -3666,7 +3666,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
          *
          *   - IE10 has a broken `TypedArray.prototype.subarray` function which returns arrays of
          *     incorrect length in some situations.
-        
+
          * We detect these buggy browsers and set `Buffer.TYPED_ARRAY_SUPPORT` to `false` so they
          * get the Object implementation, which is slower but behaves correctly.
          */
@@ -5420,7 +5420,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/ieee754/index.js":
 /*!***************************************!*\
@@ -5516,7 +5516,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/isarray/index.js":
 /*!***************************************!*\
@@ -5532,7 +5532,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/lodash/lodash.js":
 /*!***************************************!*\
@@ -22745,7 +22745,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
@@ -22759,7 +22759,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./resources/css/app.css":
 /*!*******************************!*\
@@ -22773,7 +22773,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/dist/browser/axios.cjs":
 /*!***************************************************!*\
@@ -26424,10 +26424,10 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-})
+      })
 
     /******/
-});
+  });
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
@@ -26439,14 +26439,14 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 		if (cachedModule !== undefined) {
 /******/ 			return cachedModule.exports;
       /******/
-}
+    }
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
 /******/ 			id: moduleId,
 /******/ 			loaded: false,
 /******/ 			exports: {}
       /******/
-};
+    };
 /******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
@@ -26457,7 +26457,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
     /******/
-}
+  }
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = __webpack_modules__;
@@ -26473,7 +26473,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 				deferred[i] = [chunkIds, fn, priority];
 /******/ 				return;
         /******/
-}
+      }
 /******/ 			var notFulfilled = Infinity;
 /******/ 			for (var i = 0; i < deferred.length; i++) {
 /******/ 				var [chunkIds, fn, priority] = deferred[i];
@@ -26482,26 +26482,26 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 					if ((priority & 1 === 0 || notFulfilled >= priority) && Object.keys(__webpack_require__.O).every((key) => (__webpack_require__.O[key](chunkIds[j])))) {
 /******/ 						chunkIds.splice(j--, 1);
             /******/
-} else {
+          } else {
 /******/ 						fulfilled = false;
 /******/ 						if (priority < notFulfilled) notFulfilled = priority;
             /******/
-}
+          }
           /******/
-}
+        }
 /******/ 				if (fulfilled) {
 /******/ 					deferred.splice(i--, 1)
 /******/ 					var r = fn();
 /******/ 					if (r !== undefined) result = r;
           /******/
-}
+        }
         /******/
-}
+      }
 /******/ 			return result;
       /******/
-};
+    };
     /******/
-})();
+  })();
 /******/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -26513,9 +26513,9 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
       /******/
-};
+    };
     /******/
-})();
+  })();
 /******/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
@@ -26525,13 +26525,13 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 				if (__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
           /******/
-}
+        }
         /******/
-}
+      }
       /******/
-};
+    };
     /******/
-})();
+  })();
 /******/
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
@@ -26540,20 +26540,20 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 			try {
 /******/ 				return this || new Function('return this')();
         /******/
-} catch (e) {
+      } catch (e) {
 /******/ 				if (typeof window === 'object') return window;
         /******/
-}
+      }
       /******/
-})();
+    })();
     /******/
-})();
+  })();
 /******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
     /******/
-})();
+  })();
 /******/
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
@@ -26562,12 +26562,12 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 			if (typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
         /******/
-}
+      }
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
       /******/
-};
+    };
     /******/
-})();
+  })();
 /******/
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
@@ -26576,9 +26576,9 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 			if (!module.children) module.children = [];
 /******/ 			return module;
       /******/
-};
+    };
     /******/
-})();
+  })();
 /******/
 /******/ 	/* webpack/runtime/jsonp chunk loading */
 /******/ 	(() => {
@@ -26591,7 +26591,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 			"/js/app": 0,
 /******/ 			"css/app": 0
       /******/
-};
+    };
 /******/
 /******/ 		// no chunk on demand loading
 /******/
@@ -26616,31 +26616,31 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 					if (__webpack_require__.o(moreModules, moduleId)) {
 /******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
             /******/
-}
+          }
           /******/
-}
+        }
 /******/ 				if (runtime) var result = runtime(__webpack_require__);
         /******/
-}
+      }
 /******/ 			if (parentChunkLoadingFunction) parentChunkLoadingFunction(data);
 /******/ 			for (; i < chunkIds.length; i++) {
 /******/ 				chunkId = chunkIds[i];
 /******/ 				if (__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
 /******/ 					installedChunks[chunkId][0]();
           /******/
-}
+        }
 /******/ 				installedChunks[chunkId] = 0;
         /******/
-}
+      }
 /******/ 			return __webpack_require__.O(result);
       /******/
-}
+    }
 /******/
 /******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
     /******/
-})();
+  })();
 /******/
 /************************************************************************/
 /******/

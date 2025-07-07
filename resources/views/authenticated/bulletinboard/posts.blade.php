@@ -71,7 +71,6 @@
     </li>
   </div>
 @endforeach
-
       </ul>
     </div>
   </div>
@@ -79,32 +78,32 @@
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-  var accordions = document.querySelectorAll(".accordion-btn");
-  accordions.forEach(function(accordion) {
-    accordion.addEventListener("click", function() {
-      var sublist = this.closest("li").querySelector(".sub-category-list");
-      if (!sublist) {
-        console.log("sublist not found for", this);
-        return;
-      }
-      var allSubLists = document.querySelectorAll('.sub-category-list');
-      allSubLists.forEach(function(list) {
-        if (list !== sublist) {
-          list.classList.remove("open");
-          list.style.display = "none";
+ document.addEventListener("DOMContentLoaded", function() {
+    var accordions = document.querySelectorAll(".accordion-btn");
+    accordions.forEach(function(accordion) {
+      accordion.addEventListener("click", function() {
+        var sublist = this.closest("li").querySelector(".sub-category-list");
+        if (!sublist) {
+          console.log("sublist not found for", this);
+          return;
         }
+        var allSubLists = document.querySelectorAll('.sub-category-list');
+        allSubLists.forEach(function(list) {
+          if (list !== sublist) {
+            list.classList.remove("open");
+            list.style.display = "none";
+          }
+        });
+        if (!sublist.classList.contains("open")) {
+          sublist.classList.add("open");
+          sublist.style.display = "block";
+        } else {
+          sublist.classList.remove("open");
+          sublist.style.display = "none";
+        }
+        this.classList.toggle("open");
       });
-      if (!sublist.classList.contains("open")) {
-        sublist.classList.add("open");
-        sublist.style.display = "block";
-      } else {
-        sublist.classList.remove("open");
-        sublist.style.display = "none";
-      }
-      this.classList.toggle("open");
     });
   });
-});
 </script>
 </x-sidebar>

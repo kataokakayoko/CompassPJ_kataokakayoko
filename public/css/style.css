@@ -330,6 +330,20 @@ li {
   box-sizing: border-box;
 }
 
+.search-btn-btn {
+  margin-top: 30px;
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #03AAD2;
+  color: white;
+  border: none;
+}
+
 .post-text {
   color: #000;
   font-size: 14px;
@@ -372,20 +386,25 @@ li {
 }
 
 .accordion-btn .arrow {
-  display: block !important;
-  width: 7px !important;
-  height: 7px !important;
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-top: 5px;
-  border-right: 2px solid #333 !important;
-  border-bottom: 2px solid #333 !important;
-  box-sizing: content-box;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: solid 2px #333;
+  border-width: 0 2px 2px 0;
+  padding: 3px;
   transform: rotate(45deg);
   transition: transform 0.3s ease;
 }
 
 .accordion-btn.open .arrow {
+  transform: rotate(-135deg);
+}
+
+.category-btn .arrow {
+  transform: rotate(45deg);
+}
+
+.category-btn.open .arrow {
   transform: rotate(-135deg);
 }
 
@@ -419,11 +438,27 @@ li {
   flex-wrap: wrap;
   width: 800px;
   margin: 10px auto;
-  height: 80vh;
   overflow: scroll;
   padding: 10px;
-  background: #FFF;
-  border-radius: 5px;
+}
+
+.reserve_users_area::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.reserve_users_area::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+}
+
+.reserve_users_area::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+.reserve_users_area::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
 }
 
 .reserve_users_area span {
@@ -437,11 +472,6 @@ li {
 
 .search_conditions span {
   cursor: pointer;
-}
-
-.search_conditions_inner {
-  display: none;
-  background: #FFF;
 }
 
 .subject_edit_btn {
@@ -466,4 +496,165 @@ li {
 
 .subject-checkbox-wrapper span {
   margin-right: 8px;
+}
+
+/* ユーザー検索 */
+.search-container {
+  background: #ECF1F6;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.search-field {
+  margin-bottom: 15px;
+}
+
+.label {
+  color: #003366;
+}
+
+.input-container {
+  margin-top: 5px;
+}
+
+.search-input {
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  padding: 8px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-select {
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  padding: 8px;
+  box-sizing: border-box;
+  border: none;
+}
+
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.accordion-toggle {
+  font-size: 18px;
+  color: #003366;
+}
+
+.search_conditions_inner {
+  display: none;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.search_conditions {
+  border-bottom: 2px solid #d3d3d3;
+  font-size: 16px;
+  color: #003366;
+  width: 100%;
+  display: inline-block;
+}
+
+.subject-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.subject-checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.subject-checkbox-wrapper span {
+  margin-right: 8px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.reset-btn {
+  color: #03AAD2;
+  border: none;
+  background: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.reset-btn-btn {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #03AAD2;
+  border: none;
+}
+
+.search-btn {
+  background-color: #03AAD2;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 100%;
+}
+
+.search-btn:hover {
+  background-color: #0296b4;
+}
+
+.user-info-box {
+  height: 220px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 0px 10px;
+}
+
+.user-info-item {
+  margin-bottom: 5px;
+}
+
+.user-info-label {
+  font-size: 14px;
+  color: #333;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.user-info-value {
+  font-size: 14px;
+  color: #555;
+  word-wrap: break-word;
+}
+
+.user-info-value span {
+  color: #03AAD2;
+}
+
+.subject-item {
+  background-color: #03AAD2;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin-right: 5px;
+  font-size: 12px;
+  display: inline-block;
 }
