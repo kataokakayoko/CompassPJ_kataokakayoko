@@ -40,7 +40,7 @@ li {
 .user_status {
   border-radius: 10px;
   background: #FFF;
-  margin-top: 60px;
+  margin-top: 40px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -373,7 +373,7 @@ li {
 
 /* アコーディオンメニュー */
 .accordion-btn {
-  background: #ECF1F6;
+  background: none;
   margin-top: 10px;
   color: #000;
   width: 100%;
@@ -433,13 +433,33 @@ li {
   border: none;
 }
 
-.reserve_users_area {
+.search_content {
   display: flex;
   flex-wrap: wrap;
-  width: 800px;
-  margin: 10px auto;
-  overflow: scroll;
+  justify-content: space-between;
+}
+
+.reserve_users_area {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
   padding: 10px;
+  overflow: auto;
+  height: 100%;
+  margin-left: 50px;
+}
+
+.search_area {
+  width: 25%;
+  padding: 10px;
+  position: relative;
+  z-index: 5;
+}
+
+.accordion {
+  position: relative;
+  z-index: 10;
+  width: 100%;
 }
 
 .reserve_users_area::-webkit-scrollbar {
@@ -498,6 +518,50 @@ li {
   margin-right: 8px;
 }
 
+.admin-accordion-btn {
+  background-color: #fff;
+  color: #03AAD2;
+  border-radius: 5px;
+  text-align: left;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+}
+
+.admin-accordion-btn:hover {
+  background-color: #fff;
+  color: #03AAD2;
+  border: none;
+}
+
+.admin-accordion-btn .admin-arrow {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: solid 2px #03AAD2;
+  border-width: 0 2px 2px 0;
+  padding: 3px;
+  transform: rotate(45deg);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.admin-accordion-btn.open .admin-arrow {
+  transform: rotate(-135deg);
+  border-color: #fff;
+}
+
+.subject-inner {
+  display: none;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: none;
+}
+
+.admin-accordion-btn.open+.subject-inner {
+  display: block;
+}
+
 /* ユーザー検索 */
 .search-container {
   background: #ECF1F6;
@@ -549,10 +613,15 @@ li {
 }
 
 .search_conditions_inner {
-  display: none;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
   margin-top: 10px;
-  padding: 10px;
   border-radius: 5px;
+}
+
+.search_conditions_inner.open {
+  max-height: 1000px;
 }
 
 .search_conditions {
@@ -657,4 +726,16 @@ li {
   margin-right: 5px;
   font-size: 12px;
   display: inline-block;
+}
+
+.subject-inner {
+  display: none;
+}
+
+.subject-inner.open {
+  display: block;
+}
+
+.blue-text {
+  color: #03AAD2;
 }

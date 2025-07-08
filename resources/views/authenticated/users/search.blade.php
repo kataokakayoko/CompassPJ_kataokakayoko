@@ -159,20 +159,22 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    $(function () {
-      $('.accordion-toggle').click(function (event) {
-        event.preventDefault();
-        event.stopPropagation();
+$(function () {
+  $('.accordion-toggle').click(function (event) {
+    event.preventDefault();
+    event.stopPropagation();
 
-        var $arrow = $(this).find('.arrow');
-        var $searchConditionsInner = $(this).closest('.accordion').find('.search_conditions_inner');
+    var $accordion = $(this).closest('.accordion');
+    var $searchConditionsInner = $accordion.find('.search_conditions_inner');
+    var $arrow = $accordion.find('.arrow');
 
-        $searchConditionsInner.slideToggle();
+    $searchConditionsInner.toggleClass('open');
 
-        $arrow.toggleClass('open');
-      });
-    });
-  </script>
+    $arrow.toggleClass('open');
+  });
+});
+
+</script>
 
 <style>
 .accordion-btn .arrow.open {
