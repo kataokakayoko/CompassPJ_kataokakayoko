@@ -34,9 +34,9 @@
                       <input type="checkbox" name="subjects[]" value="{{ $subject_list->id }}">
                     </div>
                   @endforeach
-                </div>
                 <div class="button-group">
                   <input type="submit" value="登録" class="btn btn-primary">
+                </div>
                 </div>
                 <input type="hidden" name="user_id" value="{{ $user->id }}">
                 {{ csrf_field() }}

@@ -41,15 +41,15 @@ class CalendarView{
         if ($day->everyDay() === null || $day->everyDay() === '') {
           $html[] = '<td class="calendar-td empty-day" style="background:#ddd;"></td>';
           continue;
-      }
+        }
         $startDay = $this->carbon->copy()->format("Y-m-01");
         $toDay = $this->carbon->copy()->format("Y-m-d");
 
         if ($day->everyDay() <= $today) {
           $html[] = '<td class="calendar-td calendar-disabled">';
-      } else {
+        } else {
           $html[] = '<td class="calendar-td '.$day->getClassName().'">';
-      }
+        }
         $html[] = $day->render();
 
         if ($day->everyDay() <= $today) {
@@ -137,3 +137,4 @@ class CalendarView{
     return $weeks;
   }
 }
+?>

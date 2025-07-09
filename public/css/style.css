@@ -72,10 +72,6 @@ li {
   background: #EEE;
 }
 
-.calendar-td {
-  min-width: 100px;
-}
-
 .day_part {
   color: #494949;
   font-size: 12px;
@@ -101,6 +97,48 @@ li {
   background-color: #e9ecef !important;
   color: #6c757d !important;
   pointer-events: none;
+}
+
+.custom-border {
+  border: none !important;
+}
+
+.table-wrapper {
+  padding: 10px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-table {
+  border: 1px solid #03AAD2;
+  border-radius: 8px;
+  width: 100%;
+  margin: 0;
+}
+
+.custom-table thead tr {
+  background-color: #03AAD2;
+  color: white;
+}
+
+.custom-table tbody tr:nth-child(odd) {
+  background-color: white;
+}
+
+.custom-table tbody tr:nth-child(even) {
+  background-color: #E0F7FF;
+}
+
+.custom-table th,
+.custom-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.margin-top-custom {
+  margin-top: 50px;
 }
 
 /* モーダル */
@@ -433,6 +471,10 @@ li {
   border: none;
 }
 
+button:focus {
+  outline: none !important;
+}
+
 .search_content {
   display: flex;
   flex-wrap: wrap;
@@ -526,6 +568,8 @@ li {
   font-size: 16px;
   cursor: pointer;
   border: none;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 
 .admin-accordion-btn:hover {
@@ -547,12 +591,11 @@ li {
 
 .admin-accordion-btn.open .admin-arrow {
   transform: rotate(-135deg);
-  border-color: #fff;
+  border-color: #03AAD2;
 }
 
 .subject-inner {
   display: none;
-  padding: 20px;
   background-color: #fff;
   border-radius: 5px;
   border: none;
@@ -636,6 +679,7 @@ li {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  flex-grow: 1;
 }
 
 .subject-checkbox-wrapper {
@@ -646,6 +690,13 @@ li {
 
 .subject-checkbox-wrapper span {
   margin-right: 8px;
+}
+
+.subject-checkbox-wrapper input {
+  transform: scale(1.2);
+  vertical-align: middle;
+  margin-bottom: .5rem;
+  margin-left: 5px;
 }
 
 .button-group {
@@ -681,7 +732,16 @@ li {
   padding: 10px;
   cursor: pointer;
   font-size: 14px;
-  width: 100%;
+  width: auto;
+  border-radius: 5px;
+}
+
+.search-field.selected_engineer .subject-container {
+  flex-grow: 1;
+}
+
+.search-field.selected_engineer button {
+  width: auto;
 }
 
 .search-btn:hover {
