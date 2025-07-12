@@ -1,7 +1,7 @@
 <x-guest-layout>
   <form action="{{ route('registerPost') }}" method="POST">
   @csrf
-  <div class="w-100 vh-100 d-flex flex-column align-items-center justify-content-center" style="background: #ECF1F6;">
+  <div class="w-100 vh-100 d-flex flex-column align-items-center justify-content-start" style="background: #ECF1F6; padding-top: 100px; box-sizing: border-box;">
       <div class="w-25 vh-75 border p-3"style="background: #fff; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
 
       <div class="register_form">

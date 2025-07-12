@@ -10,6 +10,10 @@ class CalendarSettingView{
     $this->carbon = new Carbon($date);
   }
 
+  public function getCarbon()
+{
+    return $this->carbon;
+}
   public function getTitle(){
     return $this->carbon->format('Y年n月');
   }
@@ -25,8 +29,8 @@ class CalendarSettingView{
     $html[] = '<th class="border">水</th>';
     $html[] = '<th class="border">木</th>';
     $html[] = '<th class="border">金</th>';
-    $html[] = '<th class="border">土</th>';
-    $html[] = '<th class="border">日</th>';
+    $html[] = '<th class="border text-primary">土</th>';
+    $html[] = '<th class="border text-danger">日</th>';
     $html[] = '</tr>';
     $html[] = '</thead>';
     $html[] = '<tbody>';
@@ -39,12 +43,23 @@ class CalendarSettingView{
         $startDay = $this->carbon->format("Y-m-01");
         $toDay = $this->carbon->format("Y-m-d");
 
-       if($startDay <= $day->everyDay() && $toDay >= $day->everyDay()){
-          $html[] = '<td class="past-day border">';
-        }else{
-          $html[] = '<td class="border '.$day->getClassName().'">';
+        $weekDay = $day->getCarbon()->dayOfWeek;
+
+        $tdClass = 'border ' . $day->getClassName();
+
+        if ($weekDay == 0) {
+            $tdClass .= ' text-danger';
+        } elseif ($weekDay == 6) {
+            $tdClass .= ' text-primary';
         }
+
+        if($startDay <= $day->everyDay() && $toDay >= $day->everyDay()){
+            $tdClass .= ' past-day';
+        }
+
+        $html[] = '<td class="'.$tdClass.'">';
         $html[] = $day->render();
+
         $html[] = '<div class="adjust-area">';
         if($day->everyDay()){
           if($startDay <= $day->everyDay() && $toDay >= $day->everyDay()){
