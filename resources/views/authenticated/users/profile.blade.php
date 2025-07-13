@@ -1,5 +1,5 @@
 <x-sidebar>
-  <div class="vh-100 border">
+  <div class="vh-100">
     <div class="top_area w-75 m-auto pt-5" style="text-align: left;">
       <span>{{ $user->over_name }}</span><span>{{ $user->under_name }}さんのプロフィール</span>
       <div class="user_status p-3">

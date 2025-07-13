@@ -17,15 +17,21 @@ body {
 
 /* サイドバー */
 .sidebar {
-  width: 200px;
+  width: 220px;
   background-color: #03AAD2;
   font-weight: bold;
   min-height: 100vh;
   overflow-y: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-top: 20px;
 }
 
 .main-container {
-  width: 100%;
+  margin-left: 220px;
+  padding: 20px;
+  width: calc(100% - 220px);
 }
 
 .sidebar p a {
@@ -51,7 +57,7 @@ body {
 .profile-title {
   position: absolute;
   top: 10px;
-  left: 190px;
+  left: 250px;
   margin: 0;
 }
 
@@ -390,14 +396,6 @@ body {
 .post-text {
   color: #000;
   font-size: 14px;
-}
-
-.fas.fa-heart.like_btn {
-  color: #888;
-}
-
-.fas.fa-heart.un_like_btn.like-btn-red {
-  color: #F56E6E;
 }
 
 .sub-categories {
